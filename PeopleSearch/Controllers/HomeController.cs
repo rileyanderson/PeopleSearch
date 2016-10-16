@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using PeopleSearch.DAL;
 
 namespace PeopleSearch.Controllers
 {
@@ -13,18 +14,12 @@ namespace PeopleSearch.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult GetPeople()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            PersonContext e = new PersonContext();
+            var result = e.People.ToList();
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
     }
 }
