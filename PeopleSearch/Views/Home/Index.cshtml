@@ -1,13 +1,16 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-@section scripts
-{
-    <script src="~/Scripts/angular.min.js"></script>
-    <script src="~/js/app.js"></script>
-}
-
 <div ng-controller="PeopleCtrl">
-
+    Search:<input ng-model="query" />
+    <table class="table">
+        <tr ng-repeat="r in people | filter: search">
+            <td><img ng-src="data:image/JPEG;base64,{{r.image}}"></td>
+            <td ><span class="capitalize">{{r.FirstName}}</span></td>
+            <td class="capitalize">{{r.LastName}}</td>
+            <td>{{r.age}}</td>
+            <td class="capitalize">{{r.address}}</td>
+            <td>{{r.interests}}</td>
+         </tr>
+     </table>
 </div>

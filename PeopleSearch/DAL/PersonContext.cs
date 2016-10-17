@@ -19,5 +19,6 @@ namespace PeopleSearch.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
     }
 }

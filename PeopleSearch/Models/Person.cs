@@ -10,10 +10,10 @@ namespace PeopleSearch.Models
         public int ID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        //public int age { get; set; }
-        //public string address { get; set; }
-        //public string interests { get; set;}
-        //public byte[] image { get; set; }
+        public int age { get; set; }
+        public string address { get; set; }
+        public string interests { get; set;}
+        public string image { get; set; }
 
     }
 }
