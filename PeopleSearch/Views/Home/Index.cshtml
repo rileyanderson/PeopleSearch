@@ -3,8 +3,10 @@
 }
 <div ng-controller="PeopleCtrl">
     Search:<input ng-model="query" />
+    <label>Order by</label>
+    <select ng-model="selectedOrder" ng-options="option.id as option.value for option in options"></select>
     <table class="table">
-        <tr ng-repeat="r in people | filter: search">
+        <tr ng-repeat="r in people | filter: search | orderBy:selectedOrder">
             <td><img ng-src="data:image/JPEG;base64,{{r.image}}"></td>
             <td ><span class="capitalize">{{r.FirstName}}</span></td>
             <td class="capitalize">{{r.LastName}}</td>

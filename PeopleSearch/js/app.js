@@ -1,11 +1,27 @@
 ﻿var peopleSearch = angular.module('app', []);
 
 peopleSearch.controller('PeopleCtrl', function PeopleController($scope, PeopleService) {
+
+    $scope.options =
+    [
+        {
+            "id": "FirstName",
+            "value": "First Name"
+        },
+        {
+            "id": "LastName",
+            "value": "Last Name"
+        },
+        {
+            "id": "age",
+            "value": "Age"
+        },         
+    ];
     $scope.message = "hello";
     $scope.query = {};
     $scope.queryBy = 'FirstName';
+    
     getPeople();
-    console.log("here");
     function getPeople() {
         PeopleService.getPeople()
             .success(function (result) {
