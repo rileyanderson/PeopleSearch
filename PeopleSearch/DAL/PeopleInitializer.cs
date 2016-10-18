@@ -13,7 +13,7 @@ using System.Drawing;
 
 namespace PeopleSearch.DAL
 {
-    public class PeopleInitializer : DropCreateDatabaseAlways<PersonContext>
+    public class PeopleInitializer :DropCreateDatabaseIfModelChanges<PersonContext>
     {
 
         protected override void Seed(PersonContext context)

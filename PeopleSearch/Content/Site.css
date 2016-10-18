@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #ecf0f1;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -26,3 +27,64 @@ textarea {
 .capitalize {
    text-transform: capitalize;
 }
+
+#wrapper
+{
+    width:70%;
+    margin: 0 auto;
+}
+
+.image-cropper {
+    width: 100px;
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.box {
+    width: 75%;
+    margin: 10px auto;
+    height: 20em;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    background-color: white;
+   -moz-border-radius: 14px;
+    -webkit-border-radius: 14px;
+    border-radius: 14px;
+    /*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+    -moz-box-shadow: 0px 0px 5px #000000;
+    -webkit-box-shadow: 0px 0px 5px #000000;
+    box-shadow: 0px 0px 5px #000000;
+    /*IE 7 AND 8 DO NOT SUPPORT BLUR PROPERTY OF SHADOWS*/
+ 
+}
+
+.center
+{
+    text-align:center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+.img-center {
+    margin-top: 2cm;
+    display: block;
+    margin: 0 auto;
+}
+
+pre
+{
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.1;
+}
+
+

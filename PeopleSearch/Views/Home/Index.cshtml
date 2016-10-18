@@ -1,18 +1,57 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div ng-controller="PeopleCtrl">
-    Search:<input ng-model="query" />
-    <label>Order by</label>
-    <select ng-model="selectedOrder" ng-options="option.id as option.value for option in options"></select>
-    <table class="table">
-        <tr ng-repeat="r in people | filter: search | orderBy:selectedOrder">
-            <td><img ng-src="data:image/JPEG;base64,{{r.image}}"></td>
-            <td ><span class="capitalize">{{r.FirstName}}</span></td>
-            <td class="capitalize">{{r.LastName}}</td>
-            <td>{{r.age}}</td>
-            <td class="capitalize">{{r.address}}</td>
-            <td>{{r.interests}}</td>
-         </tr>
-     </table>
+
+<h1 class="center">People Search</h1>
+<div id="wrapper">
+    <div ng-controller="PeopleCtrl">
+        
+        <div class="center">
+            <input placeholder="Search" ng-model="query" />
+            <label>Order by</label>
+            <select ng-model="selectedOrder" ng-options="option.id as option.value for option in options"></select>
+            <button ng-click="addShow()">Add Person</button>
+            <input type="checkbox" ng-model="checked" ng-change="stateChanged()">Simulate Slow Search<br>
+        </div>
+
+       
+        <br />
+        <div class="center">
+            <form name="myForm">
+                <div ng-show="myVar">
+                    <input class="img-center" type="file" ng-model="file" name="file" base-sixty-four-input required onload="onLoad" maxsize="500" accept="image/*">
+                    <input placeholder="First Name" type=text ng-model="firstname" required><br>
+                    <input placeholder="Last Name" type=text ng-model="lastname" required><br>
+                    <input placeholder="Age" type=text ng-model="age" required><br>
+                    <input placeholder="Address" type=text ng-model="address" required><br>
+                    <input placeholder="Interests" type=text ng-model="interests" required><br>
+                    <button ng-disabled="myForm.$invalid" ng-click="addToDB()">Submit</button>
+                </div>
+            </form>
+         </div>
+
+
+        <div class="box" ng-repeat="r in people | filter: search | orderBy:selectedOrder">
+            <img class="image-cropper img-center" ng-src="data:image/JPEG;base64,{{r.image}}">
+            <h1 class="center"><span class="capitalize">{{r.FirstName}} {{r.LastName}}</span></h1>
+            <div class="row">
+                <div class="col-md-4 center">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTYuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgd2lkdGg9IjMycHgiIGhlaWdodD0iMzJweCIgdmlld0JveD0iMCAwIDE2Mi45NzggMTYyLjk3OCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTYyLjk3OCAxNjIuOTc4OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+CjxnPgoJPGc+CgkJPHBhdGggZD0iTTE2Mi45NzgsMTAxLjEwMWwtMTkuNjExLTM5LjIyNGwtMTkuNjExLDM5LjIyNGgxMy4yMDljLTguMzE1LDI1Ljk1OC0zMi42MzMsNDQuODI2LTYxLjMyNCw0NC44MjYgICAgYy0zNS41MjksMC02NC40MzgtMjguOTA4LTY0LjQzOC02NC40MzhjMC0zNS41MjksMjguOTA5LTY0LjQzOCw2NC40MzgtNjQuNDM4YzI3LjM3NiwwLDUwLjc2NCwxNy4xOSw2MC4wNzcsNDEuMzI1bDYuNDQtMTIuODgyICAgIGMtMTIuODEzLTIzLjU5NS0zNy44Mi0zOS42NDktNjYuNTEyLTM5LjY0OUMzMy45MzYsNS44NDQsMCwzOS43NzgsMCw4MS40ODljMCw0MS43MDgsMzMuOTM2LDc1LjY0NSw3NS42NDUsNzUuNjQ1ICAgIGMzNC45MjQsMCw2NC4zMzEtMjMuODA5LDcyLjk5Ny01Ni4wMzJIMTYyLjk3OHoiIGZpbGw9IiNEODAwMjciLz4KCQk8cGF0aCBkPSJNMzUuNDg2LDk2LjU4Mmg3LjA4NGwyLjE1LTcuNzQ5aDguNjQ1bDIuMzMyLDcuNzQ5aDcuMzQ1bC05LjM2Mi0zMC4xOTJoLTguOTZMMzUuNDg2LDk2LjU4MnogTTQ3LjQ5NCw3Ny4zMiAgICBjMC40OTMtMS43NDksMC45NDEtNC4wMzQsMS4zOS01LjgyM2gwLjA4OGMwLjQ0OSwxLjc4OSwwLjk4OCw0LjAzNiwxLjUyNyw1LjgyM2wxLjg4Miw2LjQxM2gtNi42NzVMNDcuNDk0LDc3LjMyeiIgZmlsbD0iI0Q4MDAyNyIvPgoJCTxwYXRoIGQ9Ik04MS43MzcsNzEuNzIyYzMuMzExLDAsNS4zNzEsMC41ODMsNy4wMjksMS4yOTRsMS40MzYtNS40NjZjLTEuNDc5LTAuNzE1LTQuNDgyLTEuNDgtOC4zNzctMS40OCAgICBjLTkuOTAxLDAtMTcuMiw1LjczMS0xNy4yNTMsMTUuNzY5Yy0wLjA0Miw0LjQzNCwxLjQ4LDguMzcyLDQuMjYsMTAuOTc4YzIuNzc4LDIuNjg4LDYuNzYzLDQuMDc2LDEyLjI3Nyw0LjA3NiAgICBjMy45OCwwLDcuOTc1LTAuOTg1LDEwLjA3NS0xLjcwMVY3OS4yODlINzkuOTQzdjUuMzMxaDQuNjY1djYuMzEzYy0wLjU0MiwwLjI3NC0xLjc5OCwwLjQ0OS0zLjM2NSwwLjQ0OSAgICBjLTUuNjA0LDAtOS40OTctMy42NzctOS40OTctOS45MDRDNzEuNzQ2LDc0Ljk0NCw3Ni4wNDIsNzEuNzIyLDgxLjczNyw3MS43MjJ6IiBmaWxsPSIjRDgwMDI3Ii8+CgkJPHBvbHlnb24gcG9pbnRzPSIxMTUuMTc1LDcxLjk5MyAxMTUuMTc1LDY2LjM5NSA5Ni41MzksNjYuMzk1IDk2LjUzOSw5Ni41ODIgMTE1LjgwNCw5Ni41ODIgMTE1LjgwNCw5MC45ODkgMTAzLjM5NCw5MC45ODkgICAgIDEwMy4zOTQsODMuODIxIDExNC41MDcsODMuODIxIDExNC41MDcsNzguMjYxIDEwMy4zOTQsNzguMjYxIDEwMy4zOTQsNzEuOTkzICAgIiBmaWxsPSIjRDgwMDI3Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" /><br />
+                    <h4>{{r.age}}</h4>
+                </div>
+                <div class="col-md-4 center">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTk
+                                                tMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDYwIDYwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA2MCA2MDsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8Zz4KCTxwYXRoIGQ9Ik0zMCwyNmMzLjg2LDAsNy0zLjE0MSw3LTdzLTMuMTQtNy03LTdzLTcsMy4xNDEtNyw3UzI2LjE0LDI2LDMwLDI2eiBNMzAsMTRjMi43NTcsMCw1LDIuMjQzLDUsNXMtMi4yNDMsNS01LDUgICBzLTUtMi4yNDMtNS01UzI3LjI0MywxNCwzMCwxNHoiIGZpbGw9IiNEODAwMjciLz4KCTxwYXRoIGQ9Ik0yOS44MjMsNTQuNzU3TDQ1LjE2NCwzMi42YzUuNzU0LTcuNjcxLDQuOTIyLTIwLjI4LTEuNzgxLTI2Ljk4MkMzOS43NjEsMS45OTUsMzQuOTQ1LDAsMjkuODIzLDAgICBzLTkuOTM4LDEuOTk1LTEzLjU2LDUuNjE3Yy02LjcwMyw2LjcwMi03LjUzNSwxOS4zMTEtMS44MDQsMjYuOTUyTDI5LjgyMyw1NC43NTd6IE0xNy42NzcsNy4wMzFDMjAuOTIyLDMuNzg3LDI1LjIzNSwyLDI5LjgyMywyICAgczguOTAxLDEuNzg3LDEyLjE0Niw1LjAzMWM2LjA1LDYuMDQ5LDYuNzk1LDE3LjQzNywxLjU3MywyNC4zOTlMMjkuODIzLDUxLjI0M0wxNi4wODIsMzEuNCAgIEMxMC44ODIsMjQuNDY4LDExLjYyOCwxMy4wOCwxNy42NzcsNy4wMzF6IiBmaWxsPSIjRDgwMDI3Ii8+Cgk8cGF0aCBkPSJNNDIuMTE3LDQzLjAwN2MtMC41NS0wLjA2Ny0xLjA0NiwwLjMyNy0xLjExLDAuODc2czAuMzI4LDEuMDQ2LDAuODc2LDEuMTFDNTIuMzk5LDQ2LjIzMSw1OCw0OS41NjcsNTgsNTEuNSAgIGMwLDIuNzE0LTEwLjY1Miw2LjUtMjgsNi41UzIsNTQuMjE0LDIsNTEuNWMwLTEuOTMzLDUuNjAxLTUuMjY5LDE2LjExNy02LjUwN2MwLjU0OC0wLjA2NCwwLjk0LTAuNTYyLDAuODc2LTEuMTEgICBjLTAuMDY1LTAuNTQ5LTAuNTYxLTAuOTQ1LTEuMTEtMC44NzZDNy4zNTQsNDQuMjQ3LDAsNDcuNzM5LDAsNTEuNUMwLDU1LjcyNCwxMC4zMDUsNjAsMzAsNjBzMzAtNC4yNzYsMzAtOC41ICAgQzYwLDQ3LjczOSw1Mi42NDYsNDQuMjQ3LDQyLjExNyw0My4wMDd6IiBmaWxsPSIjRDgwMDI3Ii8+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc
+                                                +CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg==" /><br />
+                    <pre><span class="capitalize">{{r.address}}</span></pre>
+                </div>
+                <div class="col-md-4 center">
+                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQxLjUzNyA0MS41MzciIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQxLjUzNyA0MS41Mzc7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4Ij4KPGc+Cgk8Zz4KCQk8cGF0aCBkPSJNMzQuMTE1LDEwYy0yLjE0NiwwLTQuMjksMC02LjQzNiwwYzAtMi45OTgsMC01Ljk5NiwwLTguOTk0YzAtMC4wMDIsMC0wLjAwNCwwLTAuMDA2ICAgIGMwLTAuNTQ1LTAuNDU1LTEtMS0xYy0zLjkxMiwwLTcuODI0LDAtMTEuNzM1LDBjLTAuNTQ1LDAtMSwwLjQ1NS0xLDFjMCwzLDAsNiwwLDljMCwwLDAsMC0wLjAwMSwwYy0yLjE3NCwwLTQuMzQ3LDAtNi41MjEsMCAgICBjLTAuNTQ1LDAtMSwwLjQ1NS0xLDFjMCw1Ljg1MywwLDExLjcwNywwLDE3LjU2YzAsMy45OTIsMCw3Ljk4MywwLDExLjk3N2MwLDAuNTQ1LDAuNDU1LDEsMSwxYzYuMDU4LDAsMTIuMTE1LDAsMTguMTczLDAgICAgYzIuODQyLDAsNS42OCwwLDguNTIsMGMwLjI3MiwwLDAuNDc2LTAuMTAyLDAuNjMzLTAuMjQzYzAuMDIzLTAuMDE5LDAuMDUtMC4wMzIsMC4wNy0wLjA1NGMwLjAyLTAuMDIxLDAuMDMyLTAuMDQzLDAuMDQ5LTAuMDY0ICAgIGMwLjE0NS0wLjE1OCwwLjI0OC0wLjM2MSwwLjI0OC0wLjYzOWMwLTUuODU0LDAtMTEuNzA3LDAtMTcuNTYxYzAtMy45OTMsMC03Ljk4MiwwLTExLjk3NkMzNS4xMTUsMTAuNDU1LDM0LjY2LDEwLDM0LjExNSwxMHogICAgIE0xNS45NDUsMmMzLjI0NiwwLDYuNDkxLDAsOS43MzUsMGMwLDIuNjY3LDAsNS4zMzMsMCw4aC0wLjAwMWMtMy4yNDUsMC02LjQ4OSwwLTkuNzM0LDBDMTUuOTQ1LDcuMzMzLDE1Ljk0NSw0LjY2NywxNS45NDUsMnogICAgIE0xMi4yOTksMzkuNTM1Yy0xLjI5MiwwLTIuNTgzLDAtMy44NzUsMGMwLTEuMzE4LDAtMi42MzYsMC0zLjk1NGMxLjI5MiwwLDIuNTgzLDAsMy44NzUsMCAgICBDMTIuMjk5LDM2Ljg5OSwxMi4yOTksMzguMjE3LDEyLjI5OSwzOS41MzV6IE0zMy4xMTUsMzkuNTM1Yy0xLjI3MiwwLTIuNTQ1LDAtMy44MTYsMGMwLTEuMzE4LDAtMi42MzYsMC0zLjk1NCAgICBjMS4yNzEsMCwyLjU0NCwwLDMuODE2LDBDMzMuMTE1LDM2Ljg5OSwzMy4xMTUsMzguMjE3LDMzLjExNSwzOS41MzV6IE0zMy4xMTUsMjguNTZjMCwyLjAwOCwwLDQuMDE2LDAsNi4wMjEgICAgYy0xLjQzOCwwLTIuODc3LDAtNC4zMTYsMGMtMC4yNzMsMC0wLjUsMC4yMjctMC41LDAuNWMwLDEuNDg0LDAsMi45NzEsMCw0LjQ1NGMtNC4xMTgsMC04LjIzNywwLTEyLjM1NiwwICAgIGMtMC44ODEsMC0xLjc2MywwLTIuNjQ0LDBjMC0xLjQ4MywwLTIuOTcsMC00LjQ1NGMwLTAuMjczLTAuMjI3LTAuNS0wLjUtMC41Yy0xLjQ1OCwwLTIuOTE3LDAtNC4zNzUsMGMwLTMuODY4LDAtNy43MzYsMC0xMS42MDUgICAgYzAtMy42NTksMC03LjMxNiwwLTEwLjk3NmMxLjg0LDAsMy42ODEsMCw1LjUyMSwwYzAuNjY3LDAsMS4zMzMsMCwyLDBjMy4yMTcsMCw2LjQzNSwwLDkuNjUyLDBjMC4wMjcsMCwwLjA1NiwwLDAuMDgzLDAgICAgYzAuNjY3LDAsMS4zMzMsMCwyLDBjMS44MTIsMCwzLjYyNCwwLDUuNDM2LDBDMzMuMTE1LDE3LjUyLDMzLjExNSwyMy4wNCwzMy4xMTUsMjguNTZ6IiBmaWxsPSIjRDgwMDI3Ii8+CgkJPHBhdGggZD0iTTIxLjg5NCwyMy44MTdjMC4zOTctMC44ODUsMC40OTctMi4yNi0wLjczNS0yLjgzOWMtMS43MDctMC44MDMtMi45NSwwLjk2Ny0yLjU3NSwxLjU0MiAgICBjMC4xMzQsMC4xMjksMC4zOTItMC4wMzYsMC42MTQtMC4xNDhjMC4yNDctMC4xMjMsMC40NS0wLjE4LDAuMzkyLDAuMzA5Yy0wLjA5OCwwLjgxOS0yLjAyNiw1LjY4NS0wLjU3Nyw3LjI1ICAgIGMwLjgyMywwLjg4OSwyLjE5NSwwLjQ2MSwyLjc3OS0wLjA3NGMwLjE5NC0wLjE3OCwwLjM0NC0wLjQyNCwwLjMzNi0wLjcxN2MtMC4wMDctMC4yNTctMC4zODEtMC4yNDItMC40NTMtMC4yMzMgICAgYy0xLjI2LDAuMTYxLTAuODIzLTEuNDcyLTAuNzUxLTEuNzg0QzIxLjA5MiwyNi4zOTIsMjEuNjg2LDI0LjI4LDIxLjg5NCwyMy44MTd6IiBmaWxsPSIjRDgwMDI3Ii8+CgkJPGNpcmNsZSBjeD0iMjAuNTc4IiBjeT0iMTguMDA1IiByPSIxLjMxNiIgZmlsbD0iI0Q4MDAyNyIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" /><br />
+                    <h4>{{r.interests}}</h4>
+                </div>
+            </div>
+        </div>
+        <br />
+
+        </div>
 </div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PeopleSearch.DAL;
+using PeopleSearch.Models;
 
 namespace PeopleSearch.Controllers
 {
@@ -19,6 +20,14 @@ namespace PeopleSearch.Controllers
             PersonContext e = new PersonContext();
             var result = e.People.ToList();
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public void PostPerson(Person person)
+        {
+            PersonContext p = new PersonContext();
+            p.People.Add(person);
+            p.SaveChanges();
+
         }
 
     }

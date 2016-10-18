@@ -1,14 +1,15 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head >
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Scripts.Render("~/Scripts/angular.js")
     @Scripts.Render("~/js/app.js")
+    @Scripts.Render("~/js/angular-base64-upload.js")
+    @Scripts.Render("~/js/underscore-min.js")
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Site.css")
-  
     @RenderSection("scripts", required: false)
 </head>
 <body ng-app="app">

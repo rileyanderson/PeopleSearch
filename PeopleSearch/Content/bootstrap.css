@@ -526,7 +526,7 @@ h3,
 
 h4,
 .h4 {
-  font-size: 18px;
+  font-size: 17px;
 }
 
 h5,
@@ -712,7 +712,7 @@ address {
 
 code,
 pre {
-  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  /*font-family: Monaco, Menlo, Consolas, "Courier New", monospace;*/
 }
 
 code {
@@ -725,17 +725,17 @@ code {
 }
 
 pre {
-  display: block;
-  padding: 9.5px;
-  margin: 0 0 10px;
-  font-size: 13px;
-  line-height: 1.428571429;
-  color: #333333;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
   word-break: break-all;
   word-wrap: break-word;
-  background-color: #f5f5f5;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
+  font-size: 17px;
+      margin-top: 10px;
+    margin-bottom: 10px;
+  /*background-color: #f5f5f5;*/
+  /*border: 1px solid #cccccc;*/
+  /*border-radius: 4px;*/
 }
 
 pre.prettyprint {
