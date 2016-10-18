@@ -8,6 +8,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace PeopleSearch.DAL
 {
+    //Set up the DB Context
     public class PersonContext : DbContext
     {
         public PersonContext() : base("PersonContext")

@@ -1,32 +1,21 @@
 ﻿var peopleSearch = angular.module('app', ['naif.base64']);
 
 
-peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, PeopleService) {
+peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, $interval, $timeout, PeopleService) {
 
-    $scope.timeout = 1000;
-    $scope.checked = false;
-    $scope.stateChanged = function (form) {
-        console.log("here");
-        if($scope.checked == false)
-        {
-            $scope.checked == true;
-            $scope.timeout = 0;
-           
-        }
 
-        else {
-            $scope.timeout = 1000;
-            
-        }
+    //Slow Search
+    $scope.searchText = "Searching...";
+    $scope.timeout = 5000;
 
-        console.log($scope.timeout);
-    };
+
+    //Show add person
     $scope.myVar = false;
     $scope.addShow = function(){
         $scope.myVar = !$scope.myVar;
-       console.log($scope.file.base64);
     };
 
+    //Send new person to db
     $scope.addToDB = function () {
         var dataObj = {
             image: $scope.file.base64,
@@ -36,10 +25,8 @@ peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, P
             address: $scope.address,
             interests: $scope.interests
         };
-        console.log(dataObj);
 
         $http.post("Home/PostPerson", dataObj).success(function (data) {
-            Alert(ok)
         })
 
         $scope.people.unshift(dataObj);
@@ -63,10 +50,11 @@ peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, P
         },         
     ];
     $scope.message = "hello";
-    $scope.query = {};
+    $scope.query = '';
     $scope.queryBy = 'FirstName';
 
    
+    //Query the database
     getPeople();
     function getPeople() {
         PeopleService.getPeople()
@@ -80,9 +68,10 @@ peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, P
             });
     }
 
-    $scope.query = '';
 
-    $scope.search = function (user) {
+  //Get the search results 
+    $scope.search = function(user) {
+        console.log("here");
         var query = $scope.query.toLowerCase(),
         fullname = user.FirstName.toLowerCase() + ' ' + user.LastName.toLowerCase();
 
@@ -92,12 +81,11 @@ peopleSearch.controller('PeopleCtrl', function PeopleController($scope, $http, P
         return false;
     };
 
-    
-    
 
 
 });
 
+//People service
 peopleSearch.factory('PeopleService', ['$http', function($http){
     var ServiceResult = {};
     ServiceResult.getPeople = function () {

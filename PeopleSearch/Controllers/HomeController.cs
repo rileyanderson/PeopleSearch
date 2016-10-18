@@ -15,6 +15,7 @@ namespace PeopleSearch.Controllers
             return View();
         }
 
+        //Get the people from the data base
         public JsonResult GetPeople()
         {
             PersonContext e = new PersonContext();
@@ -22,6 +23,7 @@ namespace PeopleSearch.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        //Post to the database
         public void PostPerson(Person person)
         {
             PersonContext p = new PersonContext();

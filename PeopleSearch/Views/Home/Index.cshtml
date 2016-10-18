@@ -6,20 +6,23 @@
 <div id="wrapper">
     <div ng-controller="PeopleCtrl">
         
+        
         <div class="center">
-            <input placeholder="Search" ng-model="query" />
-            <label>Order by</label>
-            <select ng-model="selectedOrder" ng-options="option.id as option.value for option in options"></select>
-            <button ng-click="addShow()">Add Person</button>
-            <input type="checkbox" ng-model="checked" ng-change="stateChanged()">Simulate Slow Search<br>
+            <form name="editForm">
+                <input placeholder="Search" ng-hide="checked" ng-model="query" />
+                <input placeholder="Search" ng-show="checked" ng-model="query" ng-focus="focus=true" ng-model-options="{updateOn: 'default',debounce : timeout}" />
+                <label>Order by</label>
+                <select ng-model="selectedOrder" ng-options="option.id as option.value for option in options"></select>
+                <button ng-click="addShow()">Add Person</button>
+                <input type="checkbox" ng-model="checked">Simulate Slow Search<br />
+            </form>
         </div>
-
-       
+        <div><h4 class="center" ng-show="checked && !query && focus">{{searchText}}</h4></div>
         <br />
         <div class="center">
             <form name="myForm">
                 <div ng-show="myVar">
-                    <input class="img-center" type="file" ng-model="file" name="file" base-sixty-four-input required onload="onLoad" maxsize="500" accept="image/*">
+                    Pic<input class="img-center" type="file" ng-model="file" name="file" base-sixty-four-input required onload="onLoad" maxsize="500" accept="image/*">
                     <input placeholder="First Name" type=text ng-model="firstname" required><br>
                     <input placeholder="Last Name" type=text ng-model="lastname" required><br>
                     <input placeholder="Age" type=text ng-model="age" required><br>

@@ -5,6 +5,7 @@ using System.Web;
 
 namespace PeopleSearch.Models
 {
+    //Person object
     public class Person
     {
         public int ID { get; set; }

@@ -13,15 +13,17 @@ using System.Drawing;
 
 namespace PeopleSearch.DAL
 {
-    public class PeopleInitializer :DropCreateDatabaseIfModelChanges<PersonContext>
+    //***Important*** Drops and creates DB everytime it is run. Change to DropCreateDatabaseIfModelChanges to keep same DB across shutdowns
+    public class PeopleInitializer : DropCreateDatabaseAlways<PersonContext> 
     {
 
+        //Seeds the DB with people from a JSON file
         protected override void Seed(PersonContext context)
         {
             var people = new List<Person>{};
 
             string json = "";
-            //string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"\People.json");
+            
             using (StreamReader r = new StreamReader(HttpContext.Current.Server.MapPath("~/People.json")))
             {
                 json = r.ReadToEnd();
@@ -62,12 +64,13 @@ namespace PeopleSearch.DAL
                 context.People.Add(per);
 
             }
-           // people.ForEach(p => context.People.Add(p));
+           
             context.SaveChanges();
 
 
         }
 
+        //Get age from birthdate
         private int getAge(string age)
         {
             DateTime dob = DateTime.ParseExact(age, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
